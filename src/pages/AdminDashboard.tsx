@@ -243,6 +243,18 @@ const AdminDashboard: React.FC = () => {
             <small>Admin Portal</small>
           </div>
         </div>
+        <div className="user-info-top">
+          <div className="user-avatar">
+            {user?.email?.[0].toUpperCase() || 'A'}
+          </div>
+          <div className="user-details">
+            <p>{user?.email}</p>
+            <small>Administrator</small>
+          </div>
+          <button onClick={logout} className="logout-icon-btn" title="Logout">
+            <LogOut size={18} />
+          </button>
+        </div>
         
         <nav className="sidebar-nav">
           <button 
@@ -330,17 +342,8 @@ const AdminDashboard: React.FC = () => {
         </nav>
 
         <div className="sidebar-footer">
-          <div className="user-info">
-            <div className="user-avatar">
-              {user?.email?.[0].toUpperCase() || 'A'}
-            </div>
-            <div className="user-details">
-              <p>{user?.email}</p>
-              <small>Administrator</small>
-            </div>
-            <button onClick={logout} className="logout-icon-btn" title="Logout">
-              <LogOut size={18} />
-            </button>
+          <div className="sidebar-footer-ads-container">
+            <AdSenseUnit slot="sidebar-admin-footer" className="adsense-placeholder-min" />
           </div>
           <div className="sidebar-footer-ads-container">
             <AdSenseUnit slot="sidebar-admin-footer" className="adsense-placeholder-min" />
@@ -1131,7 +1134,7 @@ const AdminDashboard: React.FC = () => {
           display: flex;
           flex-direction: column;
           gap: var(--spacing-xs);
-          flex: 1;
+          margin-top: var(--spacing-md);
         }
 
         .sidebar-nav button {
@@ -1513,19 +1516,27 @@ const AdminDashboard: React.FC = () => {
         .reply-attachment-preview:hover .remove-preview {
           opacity: 1;
         }
-
         .sidebar-footer {
-          margin-top: auto;
-          padding: var(--spacing-md);
-          background: rgba(255, 255, 255, 0.02);
-          border-radius: var(--radius-lg);
-          border: 1px solid var(--border-current);
+          padding: 16px;
+          background: rgba(255, 255, 255, 0.03);
+          border-radius: 16px;
+          border: 1px solid rgba(255, 255, 255, 0.08);
           display: flex;
           flex-direction: column;
           gap: 12px;
+          margin-bottom: 8px;
         }
 
-        .sidebar-copyright {
+        .user-info-top {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px;
+          background: rgba(99, 102, 241, 0.1);
+          border: 1px solid rgba(99, 102, 241, 0.2);
+          border-radius: 12px;
+          margin-bottom: 8px;
+        }.sidebar-copyright {
           text-align: center;
           font-size: 0.625rem;
           color: var(--text-tertiary);
@@ -1542,71 +1553,60 @@ const AdminDashboard: React.FC = () => {
           display: flex;
           align-items: center;
           gap: 12px;
-          position: relative;
         }
 
         .user-avatar {
-          width: 40px;
-          height: 40px;
+          width: 36px;
+          height: 36px;
           background: var(--primary-gradient);
-          border-radius: 10px;
+          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 800;
-          font-size: 1rem;
+          font-size: 0.875rem;
           color: white;
-          flex-shrink: 0;
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
         }
 
         .user-details {
           flex: 1;
-          min-width: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+          overflow: hidden;
         }
 
         .user-details p {
           margin: 0;
-          font-size: 0.8125rem;
+          font-size: 0.875rem;
           font-weight: 700;
-          color: #fce7f3;
-          word-break: break-all;
-          line-height: 1.1;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .user-details small {
-          font-size: 0.625rem;
-          color: #94a3b8;
+          font-size: 0.7rem;
+          color: var(--text-tertiary);
           text-transform: uppercase;
-          letter-spacing: 0.05em;
-          font-weight: 700;
-          margin-top: 4px;
-          display: block;
+          letter-spacing: 0.5px;
         }
 
         .logout-icon-btn {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          color: var(--text-tertiary);
+          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.2);
+          color: #ef4444;
           cursor: pointer;
-          width: 32px;
-          height: 32px;
+          padding: 8px;
+          border-radius: 10px;
+          transition: all 0.2s;
           display: flex;
           align-items: center;
           justify-content: center;
-          border-radius: 8px;
-          transition: all 0.2s;
-          flex-shrink: 0;
         }
 
         .logout-icon-btn:hover {
-          color: #ef4444;
-          background: rgba(239, 68, 68, 0.1);
-          border-color: rgba(239, 68, 68, 0.2);
+          background: #ef4444;
+          color: white;
           transform: scale(1.05);
+          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
         }
 
         /* Main Content Styling */
