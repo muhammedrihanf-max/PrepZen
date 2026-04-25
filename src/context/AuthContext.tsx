@@ -194,7 +194,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           role,
           status: role === 'student' ? 'pending' : 'active',
           avatar_seed: name || email.split('@')[0],
-          joined_date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+          joined_date: new Date().toISOString()
         }]);
 
       if (profileError) throw profileError;
