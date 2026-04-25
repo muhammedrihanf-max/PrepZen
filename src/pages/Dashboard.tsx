@@ -10,7 +10,7 @@ import { PerformanceCharts } from '../components/PerformanceCharts';
 import { getStudentPerformance } from '../services/analytics';
 import { uploadFile } from '../services/storage';
 import { getAllExams, type ExamMetadata } from '../services/exams';
-import { getAllTeachers } from '../services/users';
+import { getAllTeachers, type UserProfile } from '../services/users';
 import AdSenseUnit from '../components/AdSenseUnit';
 
 const Dashboard: React.FC = () => {
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
   }>({ history: [], topics: [] });
   const [examsList, setExamsList] = useState<ExamMetadata[]>([]);
   const [loadingExams, setLoadingExams] = useState(true);
-  const [teachersList, setTeachersList] = useState<any[]>([]);
+  const [teachersList, setTeachersList] = useState<UserProfile[]>([]);
 
   useEffect(() => {
     if (user && (activeTab === 'analytics' || activeTab === 'practice')) {

@@ -48,6 +48,14 @@ const AdminDashboard: React.FC = () => {
   const [previewYear, setPreviewYear] = useState<string | null>(null);
   const [exams, setExams] = useState<Record<string, Question[]>>({});
   const [examList, setExamList] = useState<ExamMetadata[]>([]);
+  const [recentAttempts, setRecentAttempts] = useState<{
+    id?: string;
+    studentId: string;
+    studentName?: string;
+    examName: string;
+    score: number;
+    timestamp: string;
+  }[]>([]);
   const [loadingExams, setLoadingExams] = useState(true);
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -63,7 +71,6 @@ const AdminDashboard: React.FC = () => {
     avgScore: '0%',
     activeAttempts: 0
   });
-  const [recentAttempts, setRecentAttempts] = useState<any[]>([]);
 
   const handleReplyFileChange = (notiId: string | number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -96,6 +103,7 @@ const AdminDashboard: React.FC = () => {
       setReplyAttachment(prev => ({ ...prev, [notiId]: null }));
       setReplyAttachmentFile(prev => ({ ...prev, [notiId]: null }));
     } catch (error) {
+      console.error(error);
       alert("Failed to send reply. Please try again.");
     }
   };
@@ -144,6 +152,7 @@ const AdminDashboard: React.FC = () => {
         const questions = await getQuestionsByYear(year);
         setExams(prev => ({ ...prev, [year]: questions }));
       } catch (error) {
+        console.error(error);
         alert("Failed to fetch exam questions.");
         return;
       } finally {
@@ -161,6 +170,7 @@ const AdminDashboard: React.FC = () => {
         const questions = await getQuestionsByYear(year);
         setExams(prev => ({ ...prev, [year]: questions }));
       } catch (error) {
+        console.error(error);
         alert("Failed to fetch questions for preview.");
         return;
       } finally {
@@ -186,6 +196,7 @@ const AdminDashboard: React.FC = () => {
         const updatedList = await getAllExams();
         setExamList(updatedList);
       } catch (error) {
+        console.error(error);
         alert("Failed to save exam to database.");
       } finally {
         setLoadingExams(false);
@@ -208,6 +219,7 @@ const AdminDashboard: React.FC = () => {
         const updatedList = await getAllExams();
         setExamList(updatedList);
       } catch (error) {
+        console.error(error);
         alert("Failed to delete exam.");
       } finally {
         setLoadingExams(false);
