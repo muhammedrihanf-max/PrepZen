@@ -1,0 +1,68 @@
+.access-denied-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: #0f172a;
+  position: relative;
+  overflow: hidden;
+}
+
+.access-denied-content {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.access-denied-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--error);
+  margin-bottom: var(--spacing-sm);
+  box-shadow: 0 8px 16px rgba(239, 68, 68, 0.15);
+}
+
+.access-denied-text h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-current);
+  margin: 0 0 var(--spacing-sm);
+  letter-spacing: -0.02em;
+}
+
+.access-denied-text p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.access-denied-actions {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+/* Override or ensure consistency with variables.css */
+.access-denied-actions .btn-glass,
+.access-denied-actions .btn-glass-primary {
+  padding: 16px 24px;
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  box-sizing: border-box;
+}
