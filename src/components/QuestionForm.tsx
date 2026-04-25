@@ -12,22 +12,24 @@ export interface Question {
 }
 
 interface QuestionFormProps {
-  onSave: (questions: Question[], subject: string, grade: string) => void;
+  onSave: (questions: Question[], subject: string, grade: string, title: string) => void;
   onCancel: () => void;
   initialQuestions?: Question[];
   examYear?: string;
   initialSubject?: string;
   initialGrade?: string;
+  initialTitle?: string;
 }
 
 const QuestionForm: React.FC<QuestionFormProps> = ({ 
   onSave, onCancel, initialQuestions = [], examYear = '2024', 
-  initialSubject = 'Mathematics', initialGrade = 'Grade 12' 
+  initialSubject = 'Mathematics', initialGrade = 'Grade 12',
+  initialTitle
 }) => {
   const [questions, setQuestions] = useState<Question[]>(
     initialQuestions.length > 0 ? initialQuestions : [{ text: '', options: ['', '', '', ''], correctAnswer: 0, explanation: '', points: 5 }]
   );
-  const [headline, setHeadline] = useState(`Manage Questions - ${examYear} Exam`);
+  const [headline, setHeadline] = useState(initialTitle || `Manage Questions - ${examYear} Exam`);
   const [subject, setSubject] = useState(initialSubject);
   const [grade, setGrade] = useState(initialGrade);
 
@@ -145,31 +147,22 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
           />
           <div className="header-controls">
             <div className="meta-selectors">
-              <select 
+              <input 
+                type="text"
                 value={subject} 
                 onChange={(e) => setSubject(e.target.value)}
                 className="meta-select"
-                title="Select Subject"
-              >
-                <option value="Mathematics">Mathematics</option>
-                <option value="Physics">Physics</option>
-                <option value="Chemistry">Chemistry</option>
-                <option value="Biology">Biology</option>
-                <option value="English">English</option>
-                <option value="Computer Science">Computer Science</option>
-              </select>
-              <select 
+                placeholder="Subject (e.g. Physics)"
+                title="Enter Subject"
+              />
+              <input 
+                type="text"
                 value={grade} 
                 onChange={(e) => setGrade(e.target.value)}
                 className="meta-select"
-                title="Select Grade"
-              >
-                <option value="Grade 9">Grade 9</option>
-                <option value="Grade 10">Grade 10</option>
-                <option value="Grade 11">Grade 11</option>
-                <option value="Grade 12">Grade 12</option>
-                <option value="University Foundation">University Foundation</option>
-              </select>
+                placeholder="Grade (e.g. Grade 12)"
+                title="Enter Grade"
+              />
             </div>
             <button onClick={onCancel} className="btn-icon-glass" aria-label="Close form"><X size={20} /></button>
           </div>
@@ -331,7 +324,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({
             <Plus size={20} />
             <span>Add Question</span>
           </button>
-          <button className="btn-primary" onClick={() => onSave(questions, subject, grade)}>
+          <button className="btn-primary" onClick={() => onSave(questions, subject, grade, headline)}>
             <Save size={20} />
             <span>Save Exam</span>
           </button>

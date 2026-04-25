@@ -182,11 +182,11 @@ const AdminDashboard: React.FC = () => {
     setPreviewYear(year);
   };
 
-  const handleSaveQuestions = async (questions: Question[], subject: string, grade: string) => {
+  const handleSaveQuestions = async (questions: Question[], subject: string, grade: string, title: string) => {
     if (editingYear) {
       try {
         setLoadingExams(true);
-        await saveExam(editingYear, questions, subject, grade);
+        await saveExam(editingYear, questions, subject, grade, title);
         
         // Update local state
         setExams(prev => ({
@@ -593,7 +593,7 @@ const AdminDashboard: React.FC = () => {
                     .map(exam => (
                     <div key={exam.id} className="exam-card premium-card">
                       <div className="exam-card-header">
-                        <div className="exam-badge">Firestore Active</div>
+                        <div className="exam-badge">Supabase Cloud</div>
                         <div className="exam-year">{exam.id}</div>
                       </div>
                       <h3>{exam.title}</h3>
@@ -1035,6 +1035,7 @@ const AdminDashboard: React.FC = () => {
               initialQuestions={editingYear ? exams[editingYear] : []}
               initialSubject={examList.find(e => e.id === editingYear)?.subject}
               initialGrade={examList.find(e => e.id === editingYear)?.grade}
+              initialTitle={examList.find(e => e.id === editingYear)?.title}
               onSave={handleSaveQuestions}
               onCancel={() => setShowQuestionForm(false)}
             />
@@ -1540,56 +1541,73 @@ const AdminDashboard: React.FC = () => {
         .user-info {
           display: flex;
           align-items: center;
-          gap: var(--spacing-sm);
+          gap: 12px;
+          position: relative;
         }
 
         .user-avatar {
-          width: 36px;
-          height: 36px;
+          width: 40px;
+          height: 40px;
           background: var(--primary-gradient);
-          border-radius: 50%;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 800;
-          font-size: 0.875rem;
+          font-size: 1rem;
           color: white;
+          flex-shrink: 0;
+          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
         }
 
         .user-details {
           flex: 1;
-          overflow: hidden;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .user-details p {
           margin: 0;
-          font-size: 0.875rem;
+          font-size: 0.8125rem;
           font-weight: 700;
+          color: #f8fafc;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+          line-height: 1.2;
         }
 
         .user-details small {
-          font-size: 0.7rem;
-          color: var(--text-tertiary);
+          font-size: 0.625rem;
+          color: #94a3b8;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.05em;
+          font-weight: 600;
+          margin-top: 1px;
         }
 
         .logout-icon-btn {
-          background: none;
-          border: none;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           color: var(--text-tertiary);
           cursor: pointer;
-          padding: 8px;
-          border-radius: var(--radius-sm);
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 8px;
           transition: all 0.2s;
+          flex-shrink: 0;
         }
 
         .logout-icon-btn:hover {
-          color: var(--error);
+          color: #ef4444;
           background: rgba(239, 68, 68, 0.1);
+          border-color: rgba(239, 68, 68, 0.2);
+          transform: scale(1.05);
         }
 
         /* Main Content Styling */

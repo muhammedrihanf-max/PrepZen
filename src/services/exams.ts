@@ -10,10 +10,10 @@ export interface ExamMetadata {
   updatedAt: string;
 }
 
-export const saveExam = async (year: string, questions: Question[], subject: string, grade: string): Promise<void> => {
+export const saveExam = async (year: string, questions: Question[], subject: string, grade: string, title?: string): Promise<void> => {
   const examData = {
     id: year,
-    title: `${year} Mock Examination`,
+    title: title || `${year} Mock Examination`,
     subject,
     grade,
     question_count: questions.length,

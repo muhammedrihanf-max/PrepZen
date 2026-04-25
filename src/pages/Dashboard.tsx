@@ -353,7 +353,7 @@ const Dashboard: React.FC = () => {
                       <div key={exam.id} className="practice-card glass-card year-card" onClick={() => navigate(`/exam/${exam.id}`)}>
                         <div className="card-bg-glow"></div>
                         <div className="practice-card-content">
-                          <div className="year-badge">{exam.id}</div>
+                          <div className="year-badge">Supabase Cloud</div>
                           <h3>{exam.title}</h3>
                           <p>{exam.questionCount} Professional Questions</p>
                           <div className="card-footer">
