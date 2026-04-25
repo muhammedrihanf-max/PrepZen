@@ -119,7 +119,6 @@ export const subscribeToGlobalLeaderboard = (callback: (data: {
   // Simple subscription to result changes re-triggers leaderboard
   const channel = supabase
     .channel('leaderboard-changes')
-    // @ts-expect-error
     .on('postgres_changes', { event: '*', schema: 'public', table: 'results' }, () => {
       fetchLeaderboard();
     })
@@ -161,7 +160,6 @@ export const subscribeToRecentResults = (callback: (data: {
 
   const channel = supabase
     .channel('recent-results')
-    // @ts-expect-error
     .on('postgres_changes', { event: '*', schema: 'public', table: 'results' }, () => {
       fetchRecent();
     })

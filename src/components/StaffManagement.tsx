@@ -51,7 +51,7 @@ const StaffManagement: React.FC = () => {
           data.email!,
           data.password!,
           data.name!,
-          data.role as 'admin' | 'management'
+          data.role as string
         );
       } catch (err: any) {
         console.error('Provision failed:', err);

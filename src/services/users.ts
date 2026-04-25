@@ -138,11 +138,11 @@ export const subscribeToStaff = (callback: (staff: UserProfile[]) => void) => {
 };
 
 // Note: Staff creation now happens via Supabase Auth + Trigger or Edge Function
-export const createTeacherAccount = async (name: string, email: string, pass: string) => {
+export const createTeacherAccount = async (email: string, pass: string, name: string, department?: string) => {
   const response = await fetch('/api/create-user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password: pass, name, role: 'teacher' })
+    body: JSON.stringify({ email, password: pass, name, role: 'teacher', department })
   });
 
   const data = await response.json();
@@ -150,11 +150,11 @@ export const createTeacherAccount = async (name: string, email: string, pass: st
   return data.user;
 };
 
-export const createStaffAccount = async (name: string, email: string, pass: string) => {
+export const createStaffAccount = async (email: string, pass: string, name: string, role: string) => {
   const response = await fetch('/api/create-user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password: pass, name, role: 'staff' })
+    body: JSON.stringify({ email, password: pass, name, role })
   });
 
   const data = await response.json();

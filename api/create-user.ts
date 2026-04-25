@@ -8,7 +8,7 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, password, name, role } = req.body;
+  const { email, password, name, role, department } = req.body;
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return res.status(500).json({ error: 'Missing environment variables' });
@@ -41,6 +41,7 @@ export default async function handler(req: any, res: any) {
       email,
       name,
       role,
+      department,
       gender: 'other'
     });
 
