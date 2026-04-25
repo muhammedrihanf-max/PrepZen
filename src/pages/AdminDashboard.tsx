@@ -1572,11 +1572,9 @@ const AdminDashboard: React.FC = () => {
           margin: 0;
           font-size: 0.8125rem;
           font-weight: 700;
-          color: #f8fafc;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          line-height: 1.2;
+          color: #fce7f3;
+          word-break: break-all;
+          line-height: 1.1;
         }
 
         .user-details small {
@@ -1584,8 +1582,9 @@ const AdminDashboard: React.FC = () => {
           color: #94a3b8;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          font-weight: 600;
-          margin-top: 1px;
+          font-weight: 700;
+          margin-top: 4px;
+          display: block;
         }
 
         .logout-icon-btn {
