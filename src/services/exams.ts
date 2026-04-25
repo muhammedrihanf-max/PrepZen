@@ -16,8 +16,8 @@ export const saveExam = async (year: string, questions: Question[], subject: str
     title: `${year} Mock Examination`,
     subject,
     grade,
-    questionCount: questions.length,
-    updatedAt: new Date().toISOString(),
+    question_count: questions.length,
+    updated_at: new Date().toISOString(),
     questions
   };
 
@@ -31,10 +31,19 @@ export const saveExam = async (year: string, questions: Question[], subject: str
 export const getAllExams = async (): Promise<ExamMetadata[]> => {
   const { data, error } = await supabase
     .from('exams')
-    .select('id, title, subject, grade, questionCount, updatedAt');
+    .select('id, title, subject, grade, question_count, updated_at');
 
   if (error) throw error;
-  return data || [];
+  
+  // Map snake_case from DB back to camelCase for the UI
+  return (data || []).map(exam => ({
+    id: exam.id,
+    title: exam.title,
+    subject: exam.subject,
+    grade: exam.grade,
+    questionCount: exam.question_count,
+    updatedAt: exam.updated_at
+  }));
 };
 
 export const getQuestionsByYear = async (year: string): Promise<Question[]> => {

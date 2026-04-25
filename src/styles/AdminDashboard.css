@@ -1,0 +1,258 @@
+.admin-dashboard {
+  --sidebar-width: 280px;
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.admin-sidebar {
+  width: var(--sidebar-width);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  border-right: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.admin-main {
+  flex: 1;
+  padding: 40px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.stats-card {
+  padding: 24px;
+}
+
+.stats-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stats-icon-wrapper {
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.trend-icon { background: rgba(99, 102, 241, 0.1); }
+.participation-icon { background: rgba(168, 85, 247, 0.1); }
+
+.stats-header h3 { margin: 0; }
+.stats-header p { margin: 0; font-size: 0.8rem; color: var(--text-tertiary); }
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stats-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.stats-item strong { color: #22c55e; }
+
+.progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  width: 60px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #a855f7;
+}
+
+.table-card {
+  margin-top: 24px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-current);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table th {
+  padding: 16px 24px;
+  font-size: 0.8rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+}
+
+.data-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-current);
+}
+
+.status-passed { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+.status-failed { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* New Utility Classes for Responsive Migration */
+.brand-icon-img {
+  width: 28px; 
+  height: 28px; 
+  border-radius: 6px; 
+  object-fit: contain;
+}
+
+.sidebar-footer-ads-container {
+  padding: 0 1rem; 
+  margin-top: 1rem;
+}
+
+.adsense-placeholder-min {
+  min-height: 100px;
+}
+
+.loading-container {
+  grid-column: 1 / -1; 
+  text-align: center; 
+  padding: 3rem;
+}
+
+.spinner-centered {
+  margin: 0 auto 1rem;
+}
+
+.empty-exams-wrapper {
+  grid-column: 1 / -1;
+}
+
+.empty-exams-modal {
+  padding: 1.5rem; 
+  max-width: 340px; 
+  margin: 4rem auto 0; 
+  text-align: center;
+}
+
+.empty-exams-icon {
+  opacity: 0.5; 
+  margin-bottom: 0.75rem;
+}
+
+.empty-exams-title {
+  font-size: 1.1rem; 
+  margin-bottom: 0.4rem;
+}
+
+.empty-exams-text {
+  font-size: 0.8rem; 
+  color: var(--text-secondary); 
+  margin-bottom: 1.25rem;
+}
+
+.btn-create-exam-mini {
+  padding: 8px 16px; 
+  font-size: 0.85rem;
+}
+
+/* Tablet Optimizations */
+@media (max-width: 1024px) {
+  .admin-dashboard {
+    flex-direction: column;
+  }
+  
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 16px;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 16px;
+  }
+
+  .admin-main {
+    padding: 20px;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .premium-card {
+    padding: 16px !important;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+  }
+  
+  .student-modal {
+    padding: 16px !important;
+  }
+}
+
+/* Tiny Screen (4") Optimizations */
+@media (max-width: 380px) {
+  .admin-sidebar span {
+    display: none; /* Hide labels, show icons only */
+  }
+  
+  .admin-sidebar {
+    justify-content: space-around;
+  }
+  
+  .section-header-top h1 {
+    font-size: 1.5rem !important;
+  }
+}

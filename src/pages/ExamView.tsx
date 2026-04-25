@@ -214,11 +214,10 @@ const ExamView: React.FC<ExamViewProps> = ({ previewQuestions, previewYear, onEx
 
   if (loading) {
     return (
-      <div className="loading-screen" style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-current)', color: 'var(--text-current)' }}>
-        <div className="spinner-mini" style={{ marginBottom: '1.5rem', border: '3px solid rgba(99, 102, 241, 0.2)', borderTopColor: '#6366f1', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite' }} />
-        <h2 style={{ fontWeight: 800, margin: 0 }}>Gathering Question Bank...</h2>
-        <p style={{ color: 'var(--text-tertiary)', marginTop: '8px' }}>Optimizing your practice session</p>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      <div className="loading-screen">
+        <div className="spinner-large" />
+        <h2>Gathering Question Bank...</h2>
+        <p>Optimizing your practice session</p>
       </div>
     );
   }
@@ -381,8 +380,7 @@ const ExamView: React.FC<ExamViewProps> = ({ previewQuestions, previewYear, onEx
                 </div>
               </div>
               <button 
-                className="btn-primary" 
-                style={{ background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)' }}
+                className="btn-primary break-action-btn" 
                 onClick={() => {
                   setShowAdOverlay(true);
                   setAdTimeLeft(10);
@@ -408,19 +406,19 @@ const ExamView: React.FC<ExamViewProps> = ({ previewQuestions, previewYear, onEx
               <div className="ad-placeholder">
                 <div className="ad-visual pulse">
                   <GraduationCap size={64} color="#6366f1" />
-                  <h2 style={{ fontSize: '2rem', margin: '1rem 0' }}>
+                  <h2 className="ad-title">
                     {isFinishing ? "Finalizing Your Results" : "PrepZen Premium"}
                   </h2>
-                  <p style={{ color: 'var(--text-secondary)' }}>
+                  <p className="ad-description">
                     {isFinishing 
                       ? "Great job! Please wait a few seconds while we calculate your performance." 
                       : "Unlock detailed analytics and personalized study plans for faster results."}
                   </p>
                 </div>
               </div>
-              <div className="ad-footer" style={{ marginTop: '2rem', textAlign: 'center' }}>
+              <div className="ad-footer">
                 {adTimeLeft > 0 ? (
-                  <span className="ad-timer" style={{ color: 'var(--text-secondary)', fontWeight: 'bold' }}>
+                  <span className="ad-timer">
                     {isFinishing ? "Calculating results in" : "Resume exam in"} {adTimeLeft}s...
                   </span>
                 ) : (
@@ -451,13 +449,12 @@ const ExamView: React.FC<ExamViewProps> = ({ previewQuestions, previewYear, onEx
               <div className="time-up-visual animate-bounce">
                 <Timer size={64} color="#ef4444" />
               </div>
-              <h2 className="text-error" style={{ fontSize: '2.5rem', margin: '1.5rem 0' }}>Time's Up!</h2>
-              <p style={{ fontSize: '1.1rem', opacity: 0.9, marginBottom: '2rem' }}>
+              <h2 className="time-up-title text-error">Time's Up!</h2>
+              <p className="time-up-description">
                 Your exam time has expired. Please submit your answers to see your results.
               </p>
               <button 
-                className="btn-primary" 
-                style={{ background: '#ef4444', width: '100%', padding: '16px' }}
+                className="btn-primary btn-submit-timeup" 
                 onClick={handleFinishExam}
               >
                 Submit and View Results

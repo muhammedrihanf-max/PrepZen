@@ -57,7 +57,7 @@ export const getGlobalStats = async () => {
 
   const { data: results, error: resError } = await supabase
     .from('results')
-    .select('score');
+    .select('score, exam_name');
 
   if (userError || examError || resError) throw (userError || examError || resError);
 
@@ -68,11 +68,18 @@ export const getGlobalStats = async () => {
     avgScore = Math.round(sum / totalResults);
   }
 
+  const examParticipationMap: Record<string, number> = {};
+  (results || []).forEach(r => {
+    const name = r.exam_name || 'General';
+    examParticipationMap[name] = (examParticipationMap[name] || 0) + 1;
+  });
+
   return {
     studentCount: studentCount || 0,
     examCount: examCount || 0,
     avgScore: `${avgScore}%`,
-    activeAttempts: totalResults
+    activeAttempts: totalResults,
+    examParticipation: examParticipationMap
   };
 };
 

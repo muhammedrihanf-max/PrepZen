@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { Target, Award, Brain, Zap, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
+import '../styles/PerformanceCharts.css';
 
 interface ScoreHistory {
   date: string;
@@ -51,15 +52,10 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}
+      className="performance-charts-container"
     >
       {/* Premium Stat Cards - FORCED ROW */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '20px',
-        width: '100%'
-      }}>
+      <div className="stats-grid-premium">
         {[
           { 
             icon: Activity, 
@@ -98,51 +94,20 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
             key={i} 
             variants={itemVariants}
             whileHover={{ y: -3, scale: 1.01 }}
-            style={{
-              padding: '16px 20px',
-              borderRadius: '24px',
-              background: '#ffffff',
-              border: '1px solid #f1f5f9',
-              boxShadow: `0 10px 15px -3px ${stat.shadow}`,
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: '16px',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
+            className="stat-card-premium"
+            style={{ boxShadow: `0 10px 15px -3px ${stat.shadow}` }}
           >
-            <div style={{ 
-              width: '48px', 
-              height: '48px', 
-              borderRadius: '14px', 
-              background: `linear-gradient(135deg, ${stat.color1}, ${stat.color2})`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: 'white',
-              boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
-              flexShrink: 0
-            }}>
+            <div 
+              className="stat-icon-container"
+              style={{ background: `linear-gradient(135deg, ${stat.color1}, ${stat.color2})` }}
+            >
               <stat.icon size={20} />
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', textAlign: 'left' }}>
-              <span style={{ fontSize: '10px', fontWeight: 800, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{stat.label}</span>
-              <h3 style={{ fontSize: '24px', fontWeight: 900, color: '#1e293b', margin: 0, lineHeight: 1 }}>{stat.value}</h3>
-              <div style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '4px', 
-                color: '#10b981', 
-                fontSize: '9px', 
-                fontWeight: 800, 
-                backgroundColor: '#f0fdf4',
-                padding: '2px 8px',
-                borderRadius: '99px',
-                width: 'fit-content',
-                marginTop: '2px'
-              }}>
+            <div className="stat-info">
+              <span className="stat-label">{stat.label}</span>
+              <h3 className="stat-value">{stat.value}</h3>
+              <div className="stat-trend-badge">
                 <Zap size={8} fill="currentColor" />
                 <span>{stat.trend}</span>
               </div>
@@ -151,23 +116,13 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
         ))}
       </div>
 
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', // FORCED ROW FOR CHARTS IF SPACE
-        gap: '32px' 
-      }}>
+      <div className="charts-grid-adaptive">
         {/* Animated Line Chart */}
         <motion.div 
           variants={itemVariants}
-          style={{
-            background: '#ffffff',
-            border: '1px solid #f1f5f9',
-            padding: '40px',
-            borderRadius: '40px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
-          }}
+          className="chart-card-premium"
         >
-          <div className="h-[350px] w-full">
+          <div className="chart-responsive-container">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={history}>
                 <defs>
@@ -197,7 +152,7 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       return (
-                        <div style={{ background: 'white', padding: '16px', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
+                        <div className="chart-tooltip-custom">
                           <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px' }}>{payload[0].payload.date}</p>
                           <p style={{ fontSize: '24px', fontWeight: 900, color: '#3b82f6', margin: 0 }}>{payload[0].value}%</p>
                         </div>
@@ -223,15 +178,9 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
         {/* Animated Radar Chart */}
         <motion.div 
           variants={itemVariants}
-          style={{
-            background: '#ffffff',
-            border: '1px solid #f1f5f9',
-            padding: '40px',
-            borderRadius: '40px',
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05)'
-          }}
+          className="chart-card-premium"
         >
-          <div className="h-[350px] w-full">
+          <div className="chart-responsive-container">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={topics}>
                 <PolarGrid stroke="rgba(0,0,0,0.05)" />
@@ -253,7 +202,7 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       return (
-                        <div style={{ background: 'white', padding: '16px', borderRadius: '16px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', border: '1px solid #f1f5f9' }}>
+                        <div className="chart-tooltip-custom">
                           <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px' }}>{payload[0].payload.subject}</p>
                           <p style={{ fontSize: '24px', fontWeight: 900, color: '#a855f7', margin: 0 }}>{payload[0].value}%</p>
                         </div>

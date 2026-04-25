@@ -18,6 +18,7 @@ import AdSenseUnit from '../components/AdSenseUnit';
 import { uploadFile } from '../services/storage';
 import { getAllExams, saveExam, deleteExam, getQuestionsByYear, type ExamMetadata } from '../services/exams';
 import { getGlobalStats, subscribeToRecentResults } from '../services/analytics';
+import '../styles/AdminDashboard.css';
 import type { Question } from '../components/QuestionForm';
 
 const AdminDashboard: React.FC = () => {
@@ -69,7 +70,8 @@ const AdminDashboard: React.FC = () => {
     studentCount: 0,
     examCount: 0,
     avgScore: '0%',
-    activeAttempts: 0
+    activeAttempts: 0,
+    examParticipation: {} as Record<string, number>
   });
 
   const handleReplyFileChange = (notiId: string | number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -195,9 +197,9 @@ const AdminDashboard: React.FC = () => {
         // Refresh the metadata list
         const updatedList = await getAllExams();
         setExamList(updatedList);
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
-        alert("Failed to save exam to database.");
+        alert(`Failed to save exam to database: ${error.message || "Unknown error"}`);
       } finally {
         setLoadingExams(false);
       }
@@ -234,7 +236,7 @@ const AdminDashboard: React.FC = () => {
       <aside className="admin-sidebar glass-card">
         <div className="sidebar-brand" onClick={() => navigate('/')}>
           <div className="brand-icon">
-            <img src="/favicon.png" alt="PrepZen Logo" style={{ width: '28px', height: '28px', borderRadius: '6px', objectFit: 'contain' }} />
+            <img src="/favicon.png" alt="PrepZen Logo" className="brand-icon-img" />
           </div>
           <div className="brand-text">
             <span>PrepZen</span>
@@ -340,8 +342,8 @@ const AdminDashboard: React.FC = () => {
               <LogOut size={18} />
             </button>
           </div>
-          <div className="sidebar-footer-ads" style={{ padding: '0 1rem', marginTop: '1rem' }}>
-            <AdSenseUnit slot="sidebar-admin-footer" style={{ minHeight: '100px' }} />
+          <div className="sidebar-footer-ads-container">
+            <AdSenseUnit slot="sidebar-admin-footer" className="adsense-placeholder-min" />
           </div>
           <div className="sidebar-copyright">
             © 2026 Muhammad Rihan
@@ -609,17 +611,17 @@ const AdminDashboard: React.FC = () => {
                     </div>
                   ))
                 ) : loadingExams ? (
-                  <div className="loading-placeholder" style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem' }}>
-                    <div className="spinner-mini" style={{ margin: '0 auto 1rem' }} />
+                  <div className="loading-container">
+                    <div className="spinner-mini spinner-centered" />
                     <p>Syncing with Question Bank...</p>
                   </div>
                 ) : (
-                  <div className="empty-exams-container" style={{ gridColumn: '1 / -1' }}>
-                    <div className="empty-exams-card glass-card" style={{ padding: '1.5rem', maxWidth: '340px', margin: '4rem auto 0', textAlign: 'center' }}>
-                      <FileText size={28} style={{ opacity: 0.5, marginBottom: '0.75rem' }} />
-                      <h3 style={{ fontSize: '1.1rem', marginBottom: '0.4rem' }}>No Exams Created</h3>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>Start by creating your first mock examination.</p>
-                      <button className="btn-primary-glow" onClick={handleCreateExam} style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+                  <div className="empty-exams-wrapper">
+                    <div className="empty-exams-card glass-card empty-exams-modal">
+                      <FileText size={28} className="empty-exams-icon" />
+                      <h3 className="empty-exams-title">No Exams Created</h3>
+                      <p className="empty-exams-text">Start by creating your first mock examination.</p>
+                      <button className="btn-primary-glow btn-create-exam-mini" onClick={handleCreateExam}>
                         <Plus size={16} /> Create New Exam
                       </button>
                     </div>
@@ -875,56 +877,66 @@ const AdminDashboard: React.FC = () => {
                 </button>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginTop: '24px' }}>
-                <div className="premium-card" style={{ padding: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div style={{ padding: '10px', background: 'rgba(99, 102, 241, 0.1)', borderRadius: '12px' }}>
+              <div className="stats-grid">
+                <div className="premium-card stats-card">
+                  <div className="stats-header">
+                    <div className="stats-icon-wrapper trend-icon">
                       <TrendingUp size={24} color="#6366f1" />
                     </div>
                     <div>
-                      <h3 style={{ margin: 0 }}>High Score Trend</h3>
-                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>Latest top performing attempts</p>
+                      <h3>High Score Trend</h3>
+                      <p>Latest top performing attempts</p>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div className="stats-list">
                     {recentAttempts.filter(a => a.score >= 80).slice(0, 5).map(a => (
-                      <div key={a.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                      <div key={a.id} className="stats-item">
                         <span>{a.studentName}</span>
-                        <strong style={{ color: '#22c55e' }}>{a.score}%</strong>
+                        <strong>{a.score}%</strong>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="premium-card" style={{ padding: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <div style={{ padding: '10px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: '12px' }}>
+                <div className="premium-card stats-card">
+                  <div className="stats-header">
+                    <div className="stats-icon-wrapper participation-icon">
                       <BarChart3 size={24} color="#a855f7" />
                     </div>
                     <div>
-                      <h3 style={{ margin: 0 }}>Exam Participation</h3>
-                      <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-tertiary)' }}>Engagement across modules</p>
+                      <h3>Exam Participation</h3>
+                      <p>Engagement across modules</p>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    {examList.slice(0, 5).map(e => (
-                      <div key={e.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
-                        <span>{e.title}</span>
-                        <div style={{ height: '8px', width: '60px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: '45%', background: '#a855f7' }}></div>
+                  <div className="stats-list">
+                    {examList.slice(0, 5).map(e => {
+                      const attempts = globalStats.examParticipation[e.id] || 0;
+                      const percentage = globalStats.activeAttempts > 0 
+                        ? (attempts / globalStats.activeAttempts * 100) 
+                        : 0;
+                      
+                      return (
+                        <div key={e.id} className="stats-item">
+                          <span>{e.title}</span>
+                          <div className="progress-wrapper">
+                            <div className="progress-bar-bg">
+                              <div className="progress-bar-fill" style={{ width: `${percentage}%` }}></div>
+                            </div>
+                            <span>{attempts}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
 
-              <div className="premium-card" style={{ marginTop: '24px', padding: '0', overflow: 'hidden' }}>
-                <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--border-current)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h3 style={{ margin: 0 }}>All Recent Attempts</h3>
+              <div className="premium-card table-card">
+                <div className="table-header">
+                  <h3>All Recent Attempts</h3>
                 </div>
-                <div style={{ overflowX: 'auto' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                <div className="table-responsive">
+                  <table className="data-table">
                     <thead>
                       <tr style={{ background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border-current)' }}>
                         <th style={{ padding: '16px 24px', fontSize: '0.8rem', color: 'var(--text-tertiary)', textTransform: 'uppercase' }}>Student</th>

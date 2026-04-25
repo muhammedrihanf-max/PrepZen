@@ -5,6 +5,7 @@ interface AdSenseUnitProps {
   format?: 'auto' | 'fluid' | 'rectangle';
   responsive?: 'true' | 'false';
   style?: React.CSSProperties;
+  className?: string;
 }
 
 /**
@@ -15,11 +16,12 @@ const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
   slot, 
   format = 'auto', 
   responsive = 'true',
-  style = { display: 'block' } 
+  style = { display: 'block' },
+  className = ""
 }) => {
   useEffect(() => {
     try {
-      // @ts-ignore
+      // @ts-expect-error: AdSense global push
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch (e) {
       console.error("AdSense error:", e);
@@ -27,7 +29,7 @@ const AdSenseUnit: React.FC<AdSenseUnitProps> = ({
   }, []);
 
   return (
-    <div className="adsense-container" style={{ margin: '20px 0', overflow: 'hidden' }}>
+    <div className={`adsense-container ${className}`}>
       <ins className="adsbygoogle"
            style={style}
            data-ad-client="ca-pub-0000000000000000" // Replace with real publisher ID
