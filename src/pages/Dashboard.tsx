@@ -11,7 +11,7 @@ import { getStudentPerformance } from '../services/analytics';
 import { uploadFile } from '../services/storage';
 import { getAllExams, type ExamMetadata } from '../services/exams';
 import { getAllTeachers, type UserProfile } from '../services/users';
-import AdSenseUnit from '../components/AdSenseUnit';
+import AdaptiveAdUnit from '../components/AdaptiveAdUnit';
 import '../styles/Dashboard.css';
 
 const Dashboard: React.FC = () => {
@@ -321,7 +321,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="dashboard-ads">
-            <AdSenseUnit slot="student-dashboard-banner" />
+            <AdaptiveAdUnit adSenseSlot="student-dashboard-banner" adMobId="ca-app-pub-mobile-dashboard-banner" className="adsense-placeholder-banner" />
           </div>
         </motion.header>
 

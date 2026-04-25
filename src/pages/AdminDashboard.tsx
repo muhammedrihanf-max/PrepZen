@@ -14,7 +14,7 @@ import StudentManagement from '../components/StudentManagement';
 import TeacherManagement from '../components/TeacherManagement';
 import StaffManagement from '../components/StaffManagement';
 import StudentForum from '../components/StudentForum';
-import AdSenseUnit from '../components/AdSenseUnit';
+import AdaptiveAdUnit from '../components/AdaptiveAdUnit';
 import { uploadFile } from '../services/storage';
 import { getAllExams, saveExam, deleteExam, getQuestionsByYear, type ExamMetadata } from '../services/exams';
 import { getGlobalStats, subscribeToRecentResults } from '../services/analytics';
@@ -343,10 +343,10 @@ const AdminDashboard: React.FC = () => {
 
         <div className="sidebar-footer">
           <div className="sidebar-footer-ads-container">
-            <AdSenseUnit slot="sidebar-admin-footer" className="adsense-placeholder-min" />
+            <AdaptiveAdUnit adSenseSlot="sidebar-admin-footer" adMobId="ca-app-pub-mobile-sidebar" />
           </div>
           <div className="sidebar-footer-ads-container">
-            <AdSenseUnit slot="sidebar-admin-footer" className="adsense-placeholder-min" />
+            <AdaptiveAdUnit adSenseSlot="sidebar-admin-footer" adMobId="ca-app-pub-mobile-sidebar" />
           </div>
           <div className="sidebar-copyright">
             © 2026 Muhammad Rihan
