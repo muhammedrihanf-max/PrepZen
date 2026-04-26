@@ -415,10 +415,12 @@ const Dashboard: React.FC = () => {
                       <span className="contact-name">Muhammed Rihan</span>
                     </div>
                     <a href="tel:+971566202782" className="contact-link">
-                      <Phone size={14} /> +971566202782
+                      <Phone size={14} /> 
+                      <span>+971566202782</span>
                     </a>
                     <a href="mailto:muhammedrihanf@gmail.com" className="contact-link">
-                      <Mail size={14} /> muhammedrihanf@gmail.com
+                      <Mail size={14} /> 
+                      <span>muhammedrihanf@gmail.com</span>
                     </a>
                   </div>
                   <p className="contact-description">
