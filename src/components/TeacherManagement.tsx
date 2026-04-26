@@ -142,7 +142,6 @@ const TeacherManagement: React.FC = () => {
                   {teacher.status === 'active' ? <CheckCircle size={14} className="pulse-icon" /> : <XCircle size={14} />}
                   <span>{teacher.status}</span>
                 </div>
-                <button className="btn-activity">View Activity</button>
               </div>
             </motion.div>
           ))}

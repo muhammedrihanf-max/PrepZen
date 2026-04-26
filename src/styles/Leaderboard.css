@@ -1,0 +1,315 @@
+.leaderboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.leaderboard-tabs {
+  display: flex;
+  padding: 8px;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+  width: fit-content;
+  margin-bottom: 8px;
+}
+
+.leaderboard-tabs button {
+  padding: 10px 24px;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border-radius: 32px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-tabs button:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-tabs button.active {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+/* Podium Section */
+.podium-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding-top: 48px;
+}
+
+.podium-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  padding: 32px 24px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1;
+  max-width: 220px;
+  backdrop-filter: blur(12px);
+}
+
+.podium-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.podium-avatar-wrapper {
+  position: relative;
+  width: 96px;
+  height: 96px;
+}
+
+.rank-1 .podium-avatar-wrapper {
+  width: 120px;
+  height: 120px;
+}
+
+.podium-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.6);
+  padding: 4px;
+}
+
+.rank-1 .podium-avatar {
+  border-color: #f59e0b;
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);
+}
+
+.rank-2 .podium-avatar { border-color: #94a3b8; }
+.rank-3 .podium-avatar { border-color: #d97706; }
+
+.rank-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: white;
+  border: 3px solid #1e293b;
+}
+
+.rank-1 .rank-badge { background: #f59e0b; }
+.rank-2 .rank-badge { background: #94a3b8; }
+.rank-3 .rank-badge { background: #d97706; }
+
+.podium-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+}
+
+.podium-score {
+  font-size: 0.9rem;
+  color: #818cf8;
+  font-weight: 800;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.king-crown {
+  position: absolute;
+  top: -48px;
+  color: #f59e0b;
+  filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+}
+
+/* User Rank Card */
+.current-user-rank {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  margin-bottom: 12px;
+  border-radius: 24px;
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.rank-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rank-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+
+.rank-number {
+  font-size: 1.75rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #818cf8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rank-trend {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+/* Ranking List */
+.rankings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rank-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.rank-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(99, 102, 241, 0.2);
+  transform: translateX(8px);
+}
+
+.rank-card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rank-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.rank-card-name {
+  font-weight: 700;
+  color: #f1f5f9;
+  font-size: 1rem;
+}
+
+.rank-card-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.score-cell {
+  font-weight: 800;
+  color: #94a3b8;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.9rem;
+}
+
+.rank-card-trend.up { color: #10b981; }
+.rank-card-trend.down { color: #ef4444; }
+
+.rank-card-rank {
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #6366f1;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Empty State */
+.empty-leaderboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 32px;
+  text-align: center;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 32px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.empty-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6366f1;
+}
+
+/* Tablet Optimizations */
+@media (max-width: 1024px) {
+  .podium-section { gap: 16px; }
+  .podium-card { padding: 24px 16px; }
+  .podium-avatar-wrapper { width: 72px; height: 72px; }
+  .rank-1 .podium-avatar-wrapper { width: 96px; height: 96px; }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .podium-section {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding-top: 60px;
+  }
+  
+  .podium-card {
+    width: 100%;
+    max-width: 280px;
+    padding: 24px;
+  }
+  
+  .rank-1 { order: -1; } /* Keep winner at top on mobile */
+  
+  .rank-card { padding: 12px 20px; }
+  .rank-card-right { gap: 16px; }
+  .score-cell { display: none; } /* Hide score text on mobile to save space */
+}

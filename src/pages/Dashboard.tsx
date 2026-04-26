@@ -18,6 +18,15 @@ import '../styles/Dashboard.css';
 const Dashboard: React.FC = () => {
   const { user, logout, notifications, addNotification, markInquiryAsReadByStudent, clearAllNotifications, deleteNotification } = useAuth();
   const [showNotifications, setShowNotifications] = useState(false);
+
+  useEffect(() => {
+    if (showNotifications) {
+      document.body.classList.add('modal-open');
+    } else {
+      document.body.classList.remove('modal-open');
+    }
+    return () => document.body.classList.remove('modal-open');
+  }, [showNotifications]);
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [activeTab, setActiveTab] = useState<'practice' | 'leaderboard' | 'help' | 'forum' | 'analytics' | 'teacher'>('practice');
@@ -130,126 +139,65 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="dashboard-layout">
-      <nav className="dashboard-nav glass-card">
-        <div className="nav-brand" onClick={() => navigate('/')}>
-          <img src="/favicon.png" alt="PrepZen Logo" />
-          <span>PrepZen</span>
+      <header className="main-header">
+        {/* Left: Logo Section */}
+        <div className="logo-section" onClick={() => navigate('/')}>
+          <div className="logo-icon">
+            <img src="/favicon.png" alt="PrepZen" />
+          </div>
+          <span className="logo-text">PrepZen</span>
         </div>
-        <div className="nav-user">
-          <div className="user-profile-trigger" onClick={() => setShowProfile(true)}>
+        
+        {/* Right: User Controls */}
+        <div className="user-controls">
+          
+          {/* User Profile */}
+          <div className="user-profile" onClick={() => setShowProfile(true)}>
             {user?.photoURL ? (
-              <img src={user.photoURL} alt="Avatar" className="nav-avatar" />
+              <img src={user.photoURL} alt={user?.displayName || 'Student'} className="user-avatar" />
             ) : (
-              <div className="nav-avatar-placeholder">
+              <div className="user-avatar-placeholder">
                 {user?.displayName?.charAt(0) || user?.email.charAt(0).toUpperCase()}
               </div>
             )}
-            <div className="user-text">
+            <div className="user-info">
               <span className="user-name">{user?.displayName || 'Student'}</span>
               <span className="user-role">Student</span>
             </div>
-            <Settings size={16} className="settings-icon" />
           </div>
-          <div className="nav-divider"></div>
           
-          <div className="notification-wrapper">
-            <button 
-              className={`btn-icon-glass ${showNotifications ? 'active' : ''}`} 
-              onClick={() => setShowNotifications(!showNotifications)}
-              title="Notifications"
-            >
-              <Bell size={18} />
-              {notifications.filter(n => n.reply && !n.read_by_student).length > 0 && (
-                <span className="noti-badge-mini" />
-              )}
-            </button>
-
-            <AnimatePresence>
-              {showNotifications && (
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                  className="student-noti-popover glass-card"
-                >
-                  <div className="popover-header">
-                    <h3>Notifications</h3>
-                    <div className="popover-actions">
-                      {notifications.length > 0 && (
-                        <button className="btn-clear-all" onClick={clearAllNotifications}>Clear All</button>
-                      )}
-                      <button className="btn-close-pop" onClick={() => setShowNotifications(false)} title="Close Notifications"><X size={14} /></button>
-                    </div>
-                  </div>
-                  <div className="popover-content">
-                    {notifications.filter(n => n.reply || n.isBroadcast).length === 0 ? (
-                      <p className="empty-text">No notifications yet.</p>
-                    ) : (
-                      notifications
-                        .filter(n => n.reply || n.isBroadcast)
-                        .map(n => (
-                          <div 
-                            key={n.id} 
-                            className={`student-noti-item ${!n.read_by_student ? 'unread' : ''} ${n.isBroadcast ? 'broadcast-noti' : ''}`}
-                            onClick={() => {
-                              if (n.isBroadcast) {
-                                markInquiryAsReadByStudent(n.id);
-                                return;
-                              }
-                              setActiveTab('help');
-                              setShowNotifications(false);
-                              markInquiryAsReadByStudent(n.id);
-                            }}
-                          >
-                            <div className="noti-icon-box">
-                              {n.isBroadcast ? (
-                                <Megaphone size={14} color="#f59e0b" />
-                              ) : (
-                                <CheckCircle size={14} color="#22c55e" />
-                              )}
-                            </div>
-                            <div className="noti-info">
-                              {n.isBroadcast ? (
-                                <>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                                    <p className="broadcast-title"><strong>GLOBAL ALERT</strong></p>
-                                    <small style={{ margin: 0, opacity: 0.6 }}>{new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
-                                  </div>
-                                  <p style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>{n.message}</p>
-                                </>
-                              ) : (
-                                <>
-                                  <p><strong>New Reply:</strong> {n.reply?.message.substring(0, 40)}...</p>
-                                  <small>{new Date(n.reply?.timestamp || '').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
-                                </>
-                              )}
-                            </div>
-                            {!n.read_by_student && <div className="unread-dot" />}
-                            <button 
-                              className="noti-delete-btn" 
-                              title="Clear Notification"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                deleteNotification(n.id);
-                              }}
-                            >
-                              <X size={12} />
-                            </button>
-                          </div>
-                        ))
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <div className="nav-divider"></div>
-          <button onClick={logout} className="btn-icon-glass" title="Logout">
-            <LogOut size={18} />
+          {/* Settings Button */}
+          <button 
+            className="icon-button" 
+            onClick={() => setShowProfile(true)} 
+            aria-label="Settings"
+            title="Settings"
+          >
+            <Settings size={20} />
           </button>
+          
+          {/* Notifications Button */}
+          <button 
+            className={`icon-button ${showNotifications ? 'active' : ''} ${notifications.filter(n => n.reply && !n.read_by_student).length > 0 ? 'has-notification' : ''}`} 
+            onClick={() => setShowNotifications(!showNotifications)} 
+            aria-label="Notifications"
+            title="Notifications"
+          >
+            <Bell size={20} />
+          </button>
+          
+          {/* Logout Button */}
+          <button 
+            className="icon-button" 
+            onClick={logout} 
+            aria-label="Logout"
+            title="Logout"
+          >
+            <LogOut size={20} />
+          </button>
+          
         </div>
-      </nav>
+      </header>
 
       <AnimatePresence>
         {showProfile && (
@@ -409,21 +357,21 @@ const Dashboard: React.FC = () => {
 
                 <div className="contact-card">
                   <h4><ShieldCheck size={18} color="#6366f1" /> Technical Support & Author</h4>
-                  <div className="contact-links-grid">
-                    <div className="contact-info-item">
-                      <User size={16} color="var(--text-secondary)" />
-                      <span className="contact-name">Muhammed Rihan</span>
+                  <div className="contact-info">
+                    <div className="contact-item">
+                      <span className="icon"><User size={16} /></span>
+                      <span>Muhammed Rihan</span>
                     </div>
-                    <a href="tel:+971566202782" className="contact-link">
-                      <Phone size={14} /> 
+                    <a href="tel:+971566202782" className="contact-item contact-link">
+                      <span className="icon"><Phone size={14} /></span>
                       <span>+971566202782</span>
                     </a>
-                    <a href="mailto:muhammedrihanf@gmail.com" className="contact-link">
-                      <Mail size={14} /> 
+                    <a href="mailto:muhammedrihanf@gmail.com" className="contact-item contact-link">
+                      <span className="icon"><Mail size={14} /></span>
                       <span>muhammedrihanf@gmail.com</span>
                     </a>
                   </div>
-                  <p className="contact-description">
+                  <p className="author-description">
                     <strong>Muhammed Rihan</strong> is the author and developer of PrepZen.
                   </p>
                 </div>
@@ -584,20 +532,25 @@ const Dashboard: React.FC = () => {
                   {teachersList.length > 0 ? (
                     teachersList.map((teacher) => (
                       <div key={teacher.uid} className="teacher-card glass-card">
-                        <div className="teacher-avatar-large">
-                          {teacher.name.charAt(0)}
-                        </div>
-                        <h3 className="teacher-name-text">{teacher.name}</h3>
-                        <div className="teacher-info-wrapper">
-                          <span className="teacher-dept-badge">
-                            {teacher.department || 'General Instructor'}
-                          </span>
-                          <p className="teacher-email-text">{teacher.email}</p>
-                          <div className="teacher-contact-actions">
-                            <a href={`mailto:${teacher.email}`} className="contact-link-circle" title="Email Teacher">
-                              <Mail size={18} />
-                            </a>
+                        <div className="teacher-profile-left">
+                          <div className="teacher-avatar-glow">
+                            {teacher.name.charAt(0)}
                           </div>
+                          <div className="teacher-details">
+                            <h3 className="teacher-name-text">{teacher.name}</h3>
+                            <div className="teacher-meta-row">
+                              <span className="teacher-badge-vibrant">
+                                {teacher.department || 'General Instructor'}
+                              </span>
+                              <span className="teacher-email-muted">{teacher.email}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="teacher-actions-right">
+                          <a href={`mailto:${teacher.email}`} className="btn-contact-teacher" title="Email Teacher">
+                            <Mail size={18} />
+                            <span>Contact</span>
+                          </a>
                         </div>
                       </div>
                     ))
@@ -612,6 +565,120 @@ const Dashboard: React.FC = () => {
           ) : null}
         </AnimatePresence>
       </main>
+
+      <AnimatePresence>
+        {showNotifications && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="modal-backdrop" 
+              onClick={() => setShowNotifications(false)} 
+            />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: -20, x: "-50%" }}
+              animate={{ opacity: 1, scale: 1, y: 0, x: "-50%" }}
+              exit={{ opacity: 0, scale: 0.95, y: -20, x: "-50%" }}
+              className="notification-modal"
+            >
+              <div className="modal-header">
+                <div className="header-content">
+                  <span className="notification-bell">🔔</span>
+                  <h2 className="modal-title">Notifications</h2>
+                </div>
+                <div className="modal-actions-right">
+                  {notifications.filter(n => n.reply || n.isBroadcast).length > 0 && (
+                    <button className="btn-clear-all" onClick={() => {
+                      if (window.confirm('Clear all notifications?')) {
+                        clearAllNotifications();
+                      }
+                    }}>
+                      Clear All
+                    </button>
+                  )}
+                  <button className="close-button-modern" onClick={() => setShowNotifications(false)} aria-label="Close">
+                    ✕
+                  </button>
+                </div>
+              </div>
+              
+              <div className="modal-body">
+                {notifications.filter(n => n.reply || n.isBroadcast).length === 0 ? (
+                  <div className="empty-state-container">
+                    <div className="empty-state-icon">👋</div>
+                    <h3 className="empty-state-title">No notifications yet</h3>
+                    <p className="empty-state-subtitle">You're all caught up!</p>
+                  </div>
+                ) : (
+                  <div className="notification-list" style={{ padding: '20px 24px' }}>
+                    {notifications
+                      .filter(n => n.reply || n.isBroadcast)
+                      .map(n => (
+                        <div 
+                          key={n.id} 
+                          className={`student-noti-item ${!n.read_by_student ? 'unread' : ''} ${n.isBroadcast ? 'broadcast-noti' : ''}`}
+                          onClick={() => {
+                            if (n.isBroadcast) {
+                              markInquiryAsReadByStudent(n.id);
+                              return;
+                            }
+                            setActiveTab('help');
+                            setShowNotifications(false);
+                            markInquiryAsReadByStudent(n.id);
+                          }}
+                          style={{ marginBottom: '12px' }}
+                        >
+                          <div className="noti-icon-box">
+                            {n.isBroadcast ? (
+                              <Megaphone size={14} color="#f59e0b" />
+                            ) : (
+                              <CheckCircle size={14} color="#22c55e" />
+                            )}
+                          </div>
+                          <div className="noti-info">
+                            {n.isBroadcast ? (
+                              <>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                                  <p className="broadcast-title"><strong>GLOBAL ALERT</strong></p>
+                                  <small style={{ margin: 0, opacity: 0.6 }}>{new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
+                                </div>
+                                <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: 'rgba(255,255,255,0.8)' }}>{n.message}</p>
+                              </>
+                            ) : (
+                              <>
+                                <p style={{ color: '#fff' }}><strong>New Reply:</strong> {n.reply?.message.substring(0, 40)}...</p>
+                                <small style={{ opacity: 0.6 }}>{new Date(n.reply?.timestamp || '').toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</small>
+                              </>
+                            )}
+                          </div>
+                          {!n.read_by_student && <div className="unread-dot" />}
+                          <button 
+                            className="noti-delete-btn" 
+                            title="Clear Notification"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteNotification(n.id);
+                            }}
+                          >
+                            <X size={12} />
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="modal-footer">
+                <button className="contact-support-button" onClick={() => { setActiveTab('help'); setShowNotifications(false); }}>
+                  <span className="button-icon">💬</span>
+                  <span>Contact Technical Support</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

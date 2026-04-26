@@ -15,6 +15,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     <title>PrepZen | Premium Mock Exams & Practice Platform</title>
+
+    <script>
+      (function() {
+        try {
+          const savedTheme = localStorage.getItem('prepzen-theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

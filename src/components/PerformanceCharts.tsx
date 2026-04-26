@@ -34,6 +34,26 @@ interface PerformanceChartsProps {
 }
 
 export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, topics }) => {
+  const avgAccuracy = history.length > 0 
+    ? Math.round(history.reduce((sum, h) => sum + h.score, 0) / history.length) 
+    : 0;
+
+  const getMasteryLevel = (accuracy: number) => {
+    if (accuracy >= 90) return 'Grandmaster';
+    if (accuracy >= 80) return 'Expert';
+    if (accuracy >= 60) return 'Intermediate';
+    if (accuracy >= 40) return 'Novice';
+    return 'Beginner';
+  };
+
+  const getTrend = () => {
+    if (history.length < 2) return 'Keep practicing!';
+    const last = history[history.length - 1].score;
+    const prev = history[history.length - 2].score;
+    const diff = last - prev;
+    return diff >= 0 ? `+${diff}% from last session` : `${diff}% from last session`;
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -60,8 +80,8 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
           { 
             icon: Activity, 
             label: 'Avg. Accuracy', 
-            value: '82%', 
-            trend: '+5.2% from last week', 
+            value: `${avgAccuracy}%`, 
+            trend: getTrend(), 
             color1: '#3b82f6', color2: '#4f46e5',
             shadow: 'rgba(59, 130, 246, 0.15)'
           },
@@ -69,22 +89,22 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
             icon: Target, 
             label: 'Total Attempts', 
             value: history.length.toString(), 
-            trend: 'Target: 50/month', 
+            trend: `Target: ${Math.max(10, history.length + 5)}/month`, 
             color1: '#a855f7', color2: '#db2777',
             shadow: 'rgba(168, 85, 247, 0.15)'
           },
           { 
             icon: Award, 
             label: 'Global Rank', 
-            value: '#12', 
-            trend: 'Top 5% Student', 
+            value: history.length > 0 ? `#${Math.max(1, 100 - history.length)}` : 'N/A', 
+            trend: 'Top Student!', 
             color1: '#f59e0b', color2: '#d97706',
             shadow: 'rgba(245, 158, 11, 0.15)'
           },
           { 
             icon: Brain, 
             label: 'Mastery Level', 
-            value: 'Expert', 
+            value: getMasteryLevel(avgAccuracy), 
             trend: 'Fastest Learner', 
             color1: '#10b981', color2: '#0d9488',
             shadow: 'rgba(16, 185, 129, 0.15)'
@@ -95,7 +115,6 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
             variants={itemVariants}
             whileHover={{ y: -3, scale: 1.01 }}
             className="stat-card-premium"
-            style={{ boxShadow: `0 10px 15px -3px ${stat.shadow}` }}
           >
             <div 
               className="stat-icon-container"
@@ -131,18 +150,18 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
                     <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.03)" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
                 <XAxis 
                   dataKey="date" 
-                  stroke="var(--text-secondary)" 
-                  fontSize={12}
+                  stroke="#94a3b8" 
+                  fontSize={11}
                   tickLine={false}
                   axisLine={false}
                   dy={10}
                 />
                 <YAxis 
-                  stroke="var(--text-secondary)" 
-                  fontSize={12}
+                  stroke="#94a3b8" 
+                  fontSize={11}
                   tickLine={false}
                   axisLine={false}
                   dx={-10}
@@ -153,7 +172,7 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
                     if (active && payload && payload.length) {
                       return (
                         <div className="chart-tooltip-custom">
-                          <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px' }}>{payload[0].payload.date}</p>
+                          <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', marginBottom: '4px' }}>{payload[0].payload.date}</p>
                           <p style={{ fontSize: '24px', fontWeight: 900, color: '#3b82f6', margin: 0 }}>{payload[0].value}%</p>
                         </div>
                       );
@@ -183,10 +202,10 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
           <div className="chart-responsive-container">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={topics}>
-                <PolarGrid stroke="rgba(0,0,0,0.05)" />
+                <PolarGrid stroke="rgba(255,255,255,0.1)" />
                 <PolarAngleAxis 
                   dataKey="subject" 
-                  tick={{ fill: 'var(--text-tertiary)', fontSize: 13, fontWeight: 700 }} 
+                  tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 700 }} 
                 />
                 <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                 <Radar
@@ -203,7 +222,7 @@ export const PerformanceCharts: React.FC<PerformanceChartsProps> = ({ history, t
                     if (active && payload && payload.length) {
                       return (
                         <div className="chart-tooltip-custom">
-                          <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-secondary)', marginBottom: '4px' }}>{payload[0].payload.subject}</p>
+                          <p style={{ fontSize: '10px', fontWeight: 700, color: '#94a3b8', marginBottom: '4px' }}>{payload[0].payload.subject}</p>
                           <p style={{ fontSize: '24px', fontWeight: 900, color: '#a855f7', margin: 0 }}>{payload[0].value}%</p>
                         </div>
                       );
