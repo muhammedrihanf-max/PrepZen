@@ -1,9 +1,7 @@
 import React from 'react';
 import { Capacitor } from '@capacitor/core';
-import AdSenseUnit from './AdSenseUnit';
 
 interface AdaptiveAdUnitProps {
-  adSenseSlot: string;
   adMobId?: string; // App-ads.txt / ID for AdMob
   format?: 'auto' | 'fluid' | 'rectangle';
   className?: string;
@@ -15,9 +13,7 @@ interface AdaptiveAdUnitProps {
  * Mobile APK -> Shows Google AdMob Placeholder (or Real Ad if plugin configured)
  */
 const AdaptiveAdUnit: React.FC<AdaptiveAdUnitProps> = ({ 
-  adSenseSlot, 
   adMobId,
-  format = 'auto', 
   className = ""
 }) => {
   const isNative = Capacitor.isNativePlatform();
@@ -44,14 +40,8 @@ const AdaptiveAdUnit: React.FC<AdaptiveAdUnitProps> = ({
     );
   }
 
-  // Fallback to AdSense for Web
-  return (
-    <AdSenseUnit 
-      slot={adSenseSlot} 
-      format={format} 
-      className={className} 
-    />
-  );
+  // AdSense removed as per user request - focus only on AdMob for Mobile
+  return null;
 };
 
 export default AdaptiveAdUnit;
