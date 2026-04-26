@@ -1522,26 +1522,28 @@ const AdminDashboard: React.FC = () => {
           opacity: 1;
         }
         .sidebar-footer {
-          padding: 16px;
+          padding: 20px;
           background: rgba(255, 255, 255, 0.03);
-          border-radius: 16px;
+          border-radius: 20px;
           border: 1px solid rgba(255, 255, 255, 0.08);
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 16px;
           margin-bottom: 8px;
         }
 
-        .user-info-top {
+        .footer-profile-section {
           display: flex;
+          flex-direction: row;
           align-items: center;
-          gap: 12px;
-          padding: 12px;
-          background: rgba(99, 102, 241, 0.1);
-          border: 1px solid rgba(99, 102, 241, 0.2);
-          border-radius: 12px;
-          margin-bottom: 8px;
-        }.sidebar-copyright {
+          gap: 14px;
+          padding: 4px 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding-bottom: 20px;
+          margin-bottom: 12px;
+        }
+
+        .sidebar-copyright {
           text-align: center;
           font-size: 0.625rem;
           color: var(--text-tertiary);
