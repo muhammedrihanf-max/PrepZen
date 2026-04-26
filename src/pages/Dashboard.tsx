@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Capacitor } from '@capacitor/core';
-import { LogOut, GraduationCap, History, Trophy, Settings, HelpCircle, Send, CheckCircle, Image, X, Bell, Eye, Users, Megaphone, ShieldCheck, User, Phone, Mail, TrendingUp, ChevronRight, FileText } from 'lucide-react';
+import { LogOut, GraduationCap, Clock, Trophy, Settings, HelpCircle, Send, CheckCircle, Image, X, Bell, Eye, Users, Megaphone, ShieldCheck, User, Phone, Mail, TrendingUp, ChevronRight, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProfileSettings from '../components/ProfileSettings';
 import Leaderboard from '../components/Leaderboard';
@@ -455,15 +455,17 @@ const Dashboard: React.FC = () => {
                     )}
                   </div>
                   
-                  <motion.button 
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`btn-primary-glow ${isSent ? 'success' : ''}`}
-                    type="submit"
-                    disabled={isSent}
-                  >
-                    {isSent ? <><CheckCircle size={20} /> Sent Successfully!</> : <><Send size={20} /> Send to Teacher</>}
-                  </motion.button>
+                  <motion.div className="form-actions" layout>
+                    <motion.button 
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`btn-primary-glow submit-btn ${isSent ? 'success' : ''}`}
+                      type="submit"
+                      disabled={isSent}
+                    >
+                      {isSent ? <><CheckCircle size={20} /> Sent Successfully!</> : <><Send size={20} /> Send to Teacher</>}
+                    </motion.button>
+                  </motion.div>
                 </form>
 
                 <AnimatePresence>
@@ -481,14 +483,14 @@ const Dashboard: React.FC = () => {
                   )}
                 </AnimatePresence>
 
-                <div className="support-info">
-                  <p>Your teacher will be notified immediately and usually responds within 24 hours.</p>
+                <div className="response-note-container">
+                  <p className="response-note">Your teacher will be notified immediately and usually responds within 24 hours.</p>
                 </div>
               </div>
 
-              <div className="inquiry-history glass-card">
+              <div className="inquiry-history-section glass-card">
                 <div className="history-header">
-                  <History size={20} color="#6366f1" />
+                  <Clock size={20} color="#6366f1" />
                   <h3>Inquiry History</h3>
                 </div>
 
