@@ -1095,7 +1095,7 @@ const AdminDashboard: React.FC = () => {
           display: flex;
           align-items: center;
           gap: var(--spacing-md);
-          margin-bottom: var(--spacing-xl);
+          margin-bottom: var(--spacing-md);
           padding: 0 var(--spacing-sm);
           cursor: pointer;
           transition: transform 0.2s;
@@ -1522,13 +1522,13 @@ const AdminDashboard: React.FC = () => {
           opacity: 1;
         }
         .sidebar-footer {
-          padding: 20px;
+          padding: 16px;
           background: rgba(255, 255, 255, 0.03);
           border-radius: 20px;
           border: 1px solid rgba(255, 255, 255, 0.08);
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 10px;
           margin-bottom: 8px;
         }
 
@@ -1539,8 +1539,8 @@ const AdminDashboard: React.FC = () => {
           gap: 14px;
           padding: 4px 0;
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          padding-bottom: 20px;
-          margin-bottom: 12px;
+          padding-bottom: 12px;
+          margin-bottom: 8px;
         }
 
         .sidebar-copyright {
