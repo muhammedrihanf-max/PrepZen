@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Capacitor } from '@capacitor/core';
-import { LogOut, GraduationCap, History, Trophy, Settings, HelpCircle, Send, CheckCircle, Image, X, Bell, Eye, Users, Megaphone, ShieldCheck, User, Phone, Mail, TrendingUp, ChevronRight } from 'lucide-react';
+import { LogOut, GraduationCap, History, Trophy, Settings, HelpCircle, Send, CheckCircle, Image, X, Bell, Eye, Users, Megaphone, ShieldCheck, User, Phone, Mail, TrendingUp, ChevronRight, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProfileSettings from '../components/ProfileSettings';
 import Leaderboard from '../components/Leaderboard';
@@ -353,12 +353,15 @@ const Dashboard: React.FC = () => {
                     </div>
                   ) : examsList.length > 0 ? (
                     examsList.map((exam) => (
-                      <div key={exam.id} className="practice-card glass-card year-card" onClick={() => navigate(`/exam/${exam.id}`)}>
+                      <div key={exam.id} className="practice-card glass-card" onClick={() => navigate(`/exam/${exam.id}`)}>
                         <div className="card-bg-glow"></div>
                         <div className="practice-card-content">
-                          <div className="year-badge">Supabase Cloud</div>
+                          <div className="year-badge">Mock Examination</div>
                           <h3>{exam.title}</h3>
-                          <p>{exam.questionCount} Professional Questions</p>
+                          <p>
+                            <FileText size={14} style={{ marginRight: '6px', verticalAlign: 'middle', color: '#6366f1' }} />
+                            {exam.questionCount} Professional Questions
+                          </p>
                           <div className="card-footer">
                             <span>Start Practice</span>
                             <ChevronRight size={18} />
