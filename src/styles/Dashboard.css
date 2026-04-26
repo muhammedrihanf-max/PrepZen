@@ -82,19 +82,29 @@
 }
 
 .content-header h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   font-weight: 800;
   letter-spacing: -1.5px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.content-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  opacity: 0.8;
 }
 
 .dashboard-tabs {
   display: flex;
-  padding: 6px;
-  gap: 8px;
+  padding: 8px;
+  gap: 12px;
   border-radius: 40px;
   overflow-x: auto;
   scrollbar-width: none;
+  width: fit-content;
+  margin-bottom: 48px;
 }
 
 .dashboard-tabs::-webkit-scrollbar { display: none; }
@@ -102,8 +112,8 @@
 .dashboard-tabs button {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 24px;
+  gap: 12px;
+  padding: 12px 28px;
   border: none;
   background: none;
   color: var(--text-secondary);
@@ -112,24 +122,38 @@
   white-space: nowrap;
   border-radius: 30px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dashboard-tabs button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-current);
+}
+
+.dashboard-tabs button.active {
+  background: var(--primary-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
 }
 
 .exam-years h2 {
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   margin-top: 12px;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .years-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 32px;
   margin-top: 16px;
 }
 
 .practice-card {
   position: relative;
-  border-radius: 28px;
-  padding: 32px;
+  border-radius: 32px;
+  padding: 40px;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -137,7 +161,7 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
-  min-height: 220px;
+  min-height: 240px;
 }
 
 .practice-card:hover {
@@ -174,30 +198,30 @@
 
 .year-badge {
   display: inline-flex;
-  padding: 6px 14px;
+  padding: 8px 16px;
   background: rgba(99, 102, 241, 0.1);
   color: #818cf8;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   border-radius: 99px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   width: fit-content;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .practice-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #f8fafc;
-  margin-bottom: 12px;
-  line-height: 1.3;
+  margin-bottom: 16px;
+  line-height: 1.2;
 }
 
 .practice-card p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: auto;
 }
 
@@ -205,8 +229,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: 32px;
+  padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
