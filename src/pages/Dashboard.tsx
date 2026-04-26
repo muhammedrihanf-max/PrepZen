@@ -321,7 +321,7 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
           <div className="dashboard-ads">
-            <AdaptiveAdUnit adSenseSlot="student-dashboard-banner" adMobId="ca-app-pub-mobile-dashboard-banner" className="adsense-placeholder-banner" />
+            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-dashboard-banner" className="adsense-placeholder-banner" />
           </div>
         </motion.header>
 

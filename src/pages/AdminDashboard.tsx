@@ -234,15 +234,6 @@ const AdminDashboard: React.FC = () => {
 
 
       <aside className="admin-sidebar glass-card">
-        <div className="sidebar-brand" onClick={() => navigate('/')}>
-          <div className="brand-icon">
-            <img src="/favicon.png" alt="PrepZen Logo" className="brand-icon-img" />
-          </div>
-          <div className="brand-text">
-            <span>PrepZen</span>
-            <small>Admin Portal</small>
-          </div>
-        </div>
         <div className="user-info-top">
           <div className="user-avatar">
             {user?.email?.[0].toUpperCase() || 'A'}
@@ -251,9 +242,16 @@ const AdminDashboard: React.FC = () => {
             <p>{user?.email}</p>
             <small>Administrator</small>
           </div>
-          <button onClick={logout} className="logout-icon-btn" title="Logout">
-            <LogOut size={18} />
-          </button>
+        </div>
+
+        <div className="sidebar-brand" onClick={() => navigate('/')}>
+          <div className="brand-icon">
+            <img src="/favicon.png" alt="PrepZen Logo" className="brand-icon-img" />
+          </div>
+          <div className="brand-text">
+            <span>PrepZen</span>
+            <small>Admin Portal</small>
+          </div>
         </div>
         
         <nav className="sidebar-nav">
@@ -343,11 +341,17 @@ const AdminDashboard: React.FC = () => {
 
         <div className="sidebar-footer">
           <div className="sidebar-footer-ads-container">
-            <AdaptiveAdUnit adSenseSlot="sidebar-admin-footer" adMobId="ca-app-pub-mobile-sidebar" />
+            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
           </div>
           <div className="sidebar-footer-ads-container">
-            <AdaptiveAdUnit adSenseSlot="sidebar-admin-footer" adMobId="ca-app-pub-mobile-sidebar" />
+            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
           </div>
+          
+          <button onClick={logout} className="sidebar-logout-btn-full">
+            <LogOut size={18} />
+            <span>Logout Account</span>
+          </button>
+
           <div className="sidebar-copyright">
             © 2026 Muhammad Rihan
           </div>
@@ -1589,24 +1593,37 @@ const AdminDashboard: React.FC = () => {
           letter-spacing: 0.5px;
         }
 
-        .logout-icon-btn {
-          background: rgba(239, 68, 68, 0.1);
-          border: 1px solid rgba(239, 68, 68, 0.2);
-          color: #ef4444;
-          cursor: pointer;
-          padding: 8px;
-          border-radius: 10px;
-          transition: all 0.2s;
+        .sidebar-logout-btn-full {
+          width: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
+          gap: 10px;
+          padding: 12px;
+          background: rgba(239, 68, 68, 0.08);
+          border: 1px solid rgba(239, 68, 68, 0.2);
+          border-radius: 12px;
+          color: #ef4444;
+          font-weight: 700;
+          font-size: 0.875rem;
+          cursor: pointer;
+          transition: all 0.3s;
+          margin-top: 4px;
         }
 
-        .logout-icon-btn:hover {
+        .sidebar-logout-btn-full:hover {
           background: #ef4444;
           color: white;
-          transform: scale(1.05);
-          box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .sidebar-logout-btn-full svg {
+          transition: transform 0.3s;
+        }
+
+        .sidebar-logout-btn-full:hover svg {
+          transform: translateX(2px);
         }
 
         /* Main Content Styling */
