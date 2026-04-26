@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Capacitor } from '@capacitor/core';
 import { LogOut, GraduationCap, History, Trophy, Settings, HelpCircle, Send, CheckCircle, Image, X, Bell, Eye, Users, Megaphone, ShieldCheck, User, Phone, Mail, TrendingUp, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ProfileSettings from '../components/ProfileSettings';
@@ -320,9 +321,11 @@ const Dashboard: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="dashboard-ads">
-            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-dashboard-banner" className="adsense-placeholder-banner" />
-          </div>
+          {Capacitor.isNativePlatform() && (
+            <div className="dashboard-ads">
+              <AdaptiveAdUnit adMobId="ca-app-pub-mobile-dashboard-banner" className="adsense-placeholder-banner" />
+            </div>
+          )}
         </motion.header>
 
         <AnimatePresence mode="wait">

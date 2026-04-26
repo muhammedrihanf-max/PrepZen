@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { Capacitor } from '@capacitor/core';
 import { 
   LogOut, GraduationCap, Users, FileText, BarChart3, Plus, 
   Trash2, Edit2, Eye, TrendingUp, TrendingDown, Zap, Target, 
@@ -341,12 +342,16 @@ const AdminDashboard: React.FC = () => {
               <small>Administrator</small>
             </div>
           </div>
-          <div className="sidebar-footer-ads-container">
-            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
-          </div>
-          <div className="sidebar-footer-ads-container">
-            <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
-          </div>
+          {Capacitor.isNativePlatform() && (
+            <>
+              <div className="sidebar-footer-ads-container">
+                <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
+              </div>
+              <div className="sidebar-footer-ads-container">
+                <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
+              </div>
+            </>
+          )}
           
           <button onClick={logout} className="sidebar-logout-btn-full">
             <LogOut size={18} />
