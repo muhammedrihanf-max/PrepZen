@@ -608,9 +608,6 @@ const Dashboard: React.FC = () => {
           ) : null}
         </AnimatePresence>
       </main>
-      <footer className="app-footer">
-        © 2026 Muhammad Rihan. All rights reserved.
-      </footer>
     </div>
   );
 };
