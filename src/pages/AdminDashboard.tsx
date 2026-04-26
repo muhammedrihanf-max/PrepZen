@@ -234,15 +234,7 @@ const AdminDashboard: React.FC = () => {
 
 
       <aside className="admin-sidebar glass-card">
-        <div className="user-info-top">
-          <div className="user-avatar">
-            {user?.email?.[0].toUpperCase() || 'A'}
-          </div>
-          <div className="user-details">
-            <p>{user?.email}</p>
-            <small>Administrator</small>
-          </div>
-        </div>
+        {/* Profile moved to footer */}
 
         <div className="sidebar-brand" onClick={() => navigate('/')}>
           <div className="brand-icon">
@@ -340,6 +332,15 @@ const AdminDashboard: React.FC = () => {
         </nav>
 
         <div className="sidebar-footer">
+          <div className="footer-profile-section">
+            <div className="user-avatar">
+              {user?.email?.[0].toUpperCase() || 'A'}
+            </div>
+            <div className="user-details">
+              <p>{user?.email}</p>
+              <small>Administrator</small>
+            </div>
+          </div>
           <div className="sidebar-footer-ads-container">
             <AdaptiveAdUnit adMobId="ca-app-pub-mobile-sidebar" />
           </div>
